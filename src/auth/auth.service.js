@@ -1,4 +1,4 @@
-const API_URL = "http://3.85.30.114:8090/api/security/oauth/";
+const API_URL = "https://voyage-bastille-18063.herokuapp.com/api/security2/oauth/";
 
 class AuthService {
     async login(username, password) {
