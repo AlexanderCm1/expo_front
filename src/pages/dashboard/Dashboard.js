@@ -5,35 +5,20 @@ import AuthService from "../../auth/auth.service";
 import { Route, Switch, useRouteMatch } from "react-router-dom";
 import Layout from "../../components/Layout";
 import Docente from "./docente/Docente";
+import Home from '../../components/Home'
 
 const Dashboard = () => {
   const { path, url } = useRouteMatch();
   let [expireAt, setExpireAt] = useState(localStorage.getItem("expireAt"));
-  const [user,setUser] = useState({});
+  const [user,setUser] = useState(AuthService.getCurrentUser());
 
-  useEffect(() => {
-    if(localStorage.expireAt){
-      let a = localStorage.getItem("expireAt");
-      setUser(AuthService.getCurrentUser());
-      let intervalId = setInterval(() => {
-        if (a < 1) {
-          setExpireAt(a);
-          return;
-        }
-        a = a - 1;
-        localStorage.setItem("expireAt", a);
-        console.log(a);
-      }, 1000);
-      return () => clearInterval(intervalId);
-    }
 
-  }, []);
 
   const renderDashboard = {
     ROLE_DOCENTE: () => (
       <>
         <Route exact path={`${path}`}>
-          Bienvenido
+          <Home/>
         </Route>
         <Route exact path={`${path}/participar`}>
           <Docente docente={user.docente}/>
